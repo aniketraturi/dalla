@@ -6,16 +6,6 @@ export default function Education({ education, handleArrayInputChange, addEducat
     return endYearB - endYearA;
   });
 
-  const displayInstitution = (institution) => {
-    const match = institution.match(/^(.*)\s*\*\*\[(.*?)\]\*\*$/);
-    if (match) {
-      const name = match[1].trim();
-      const major = match[2].trim();
-      return `${name} (<strong>${major}</strong>)`;
-    }
-    return institution;
-  };
-
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between whitespace-pre-line">
@@ -43,9 +33,11 @@ export default function Education({ education, handleArrayInputChange, addEducat
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">機関 / Institution and Major</label>
-            <div
+            <input
+              type="text"
+              value={edu.institution ?? ''}
+              onChange={(e) => handleArrayInputChange(e, education.indexOf(edu), 'institution', 'education')}
               className="mt-1 block text-black w-full rounded-md border-gray-300 shadow-sm p-2"
-              dangerouslySetInnerHTML={{ __html: displayInstitution(edu.institution) }}
             />
           </div>
           <div>
