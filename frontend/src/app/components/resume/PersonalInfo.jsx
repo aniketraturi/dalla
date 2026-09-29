@@ -88,6 +88,10 @@ export default function PersonalInfo({
   const nameOptions = [
     { value: details.name, label: `English: ${details.name}` },
     details.katakana && { value: details.katakana, label: `カタカナ: ${details.katakana}` },
+    details.name && details.katakana && {
+      value: `${details.name}／${details.katakana}`,
+      label: `English／Katakana: ${details.name}／${details.katakana}`,
+    },
     details.initials && { value: details.initials, label: `Initials(イニシャル): ${details.initials}` },
   ].filter(Boolean);
 
