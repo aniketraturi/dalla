@@ -2,6 +2,17 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+Use Node.js 24.22.3 from the repository's `.nvmrc` and pnpm 10.15.0.
+From `frontend/`, install with `corepack pnpm install --frozen-lockfile`.
+Build with `NEXT_PUBLIC_BASE_PATH=/skill-sheet corepack pnpm build`
+for AWS. Use the same setting when starting that release. Leave
+`NEXT_PUBLIC_BASE_PATH` unset for root-path deployments.
+Set `NEXT_PUBLIC_RESUME_API_URL` at build time when the PDF companion is
+hosted separately from the default local endpoint.
+
+See [the Skill Sheet 1 deployment runbook](./AWS-SKILL-SHEET-1.md) for
+staging, cutover, and rollback.
+
 First, run the development server:
 
 ```bash

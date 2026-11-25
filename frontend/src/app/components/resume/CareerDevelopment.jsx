@@ -1,3 +1,4 @@
+import { appPath } from '@/app/helper/basePath';
 import UndoButton from "../buttons/UndoButton";
 import DeleteButton from "../buttons/DeleteButton";
 export default function CareerDevelopment({ 
@@ -9,7 +10,7 @@ export default function CareerDevelopment({
   setError(null);
   console.log(userPrompt.CareerDevelopment);
   try {
-    const response = await fetch('/api/rethink/rethinkWorkValues', {
+    const response = await fetch(appPath('/api/rethink/rethinkWorkValues'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

@@ -1,3 +1,4 @@
+import { appPath } from '@/app/helper/basePath';
 import UndoButton from "../buttons/UndoButton";
 export default function JapaneseCompanies({
   details, setDetails, handleInputChange, fetchJapaneseCompanies, isLoading, setIsLoading,setError, newDetails, setNewDetails, userPrompt, setUserPrompt, prevDetails, setPrevDetails
@@ -6,7 +7,7 @@ const fetchRethinkJapaneseCompanies = async () => {
   setIsLoading(true);
   setError(null);
   try {
-    const response = await fetch('/api/rethink/rethinkJapaneseCompany', {
+    const response = await fetch(appPath('/api/rethink/rethinkJapaneseCompany'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

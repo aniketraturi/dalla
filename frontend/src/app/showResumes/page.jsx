@@ -1,4 +1,5 @@
 'use client';
+import { appPath } from '@/app/helper/basePath';
 import { useState, useEffect } from 'react';
 import ResumeList from '../components/resumeList';
 
@@ -11,7 +12,7 @@ export default function ShowResume() {
     const fetchResumes = async () => {
       try {
         console.log('Fetching resumes from /api/fetchResumes at');
-        const response = await fetch('/api/fetchResumes', {
+        const response = await fetch(appPath('/api/fetchResumes'), {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });

@@ -1,5 +1,6 @@
 'use client';
 
+import { appPath } from '@/app/helper/basePath';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import CryptoJS from 'crypto-js';
@@ -15,7 +16,7 @@ export default function Employees() {
     const fetchEmployees = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch('/api/fetchEmployees');
+        const response = await fetch(appPath('/api/fetchEmployees'));
         const data = await response.json();
         if (!response.ok) throw new Error(data.error || 'Failed to fetch employees');
         setEmployees(data.employees || []);

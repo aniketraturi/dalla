@@ -1,5 +1,6 @@
 'use client';
 
+import { appPath } from '@/app/helper/basePath';
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
@@ -137,7 +138,7 @@ export default function MakeResume() {
         }
       try {
         
-        const response = await fetch(`/api/fetchSavedData?id_number=${id_number}`);
+        const response = await fetch(appPath(`/api/fetchSavedData?id_number=${id_number}`));
 
         if (!response.ok) {
           const errorData = await response.json();
@@ -215,7 +216,7 @@ export default function MakeResume() {
   const fetchCareerAspirations = async () => {
     return fetchWithToast('Career Aspirations', async () => {
       if (!details.id_number) throw new Error('id_number is required');
-      const res = await fetch('/api/careerAspirations', {
+      const res = await fetch(appPath('/api/careerAspirations'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id_number: details.id_number }),
@@ -248,7 +249,7 @@ export default function MakeResume() {
 
   const fetchLanguagesAndTools = async () => {
     return fetchWithToast('Languages and Tools', async () => {
-      const res = await fetch('/api/languagesAndTools', {
+      const res = await fetch(appPath('/api/languagesAndTools'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id_number: details.id_number }),
@@ -279,7 +280,7 @@ export default function MakeResume() {
 
   const fetchInternshipExperience = async () => {
     return fetchWithToast('Internship Experience', async () => {
-      const res = await fetch('/api/internship', {
+      const res = await fetch(appPath('/api/internship'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id_number: details.id_number }),
@@ -301,7 +302,7 @@ export default function MakeResume() {
 
   const handlefetchEducation = async () => {
     return fetchWithToast('Education', async () => {
-      const res = await fetch('/api/fetchEducation', {
+      const res = await fetch(appPath('/api/fetchEducation'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id_number: details.id_number }),
@@ -321,7 +322,7 @@ export default function MakeResume() {
 
   const fetchJapaneseCompanies = async () => {
     return fetchWithToast('Japanese Companies', async () => {
-      const res = await fetch('/api/japaneseCompanies', {
+      const res = await fetch(appPath('/api/japaneseCompanies'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id_number: details.id_number }),
@@ -347,7 +348,7 @@ export default function MakeResume() {
 
   const fetchWorkValues = async () => {
     return fetchWithToast('Career Development', async () => {
-      const res = await fetch('/api/workValues', {
+      const res = await fetch(appPath('/api/workValues'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id_number: details.id_number }),
@@ -371,7 +372,7 @@ export default function MakeResume() {
 
   const fetchFieldsOfInterest = async () => {
     return fetchWithToast('Fields of Interest', async () => {
-      const res = await fetch('/api/fieldsOfInterest', {
+      const res = await fetch(appPath('/api/fieldsOfInterest'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id_number: details.id_number }),
@@ -403,7 +404,7 @@ export default function MakeResume() {
         examMonth: details.examMonth,
       };
       console.log('Payload for JLPT suggestions:', payload);
-      const response = await fetch('/api/gpt', {
+      const response = await fetch(appPath('/api/gpt'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({PromptData: payload}),
@@ -432,8 +433,8 @@ export default function MakeResume() {
         formData.append('photo', details.photo);
       }
       formData.append('sessionId', sessionId);
-      // https://dalla-production.up.railway.app/api/resume
-      const response = await fetch('http://localhost:3001/api/resume', {
+      const resumeApiUrl = process.env.NEXT_PUBLIC_RESUME_API_URL || 'http://localhost:3001/api/resume';
+      const response = await fetch(resumeApiUrl, {
         method: 'POST',
         body: formData,
       });
@@ -455,7 +456,7 @@ export default function MakeResume() {
       const formData = new FormData();
       formData.append('details', JSON.stringify(details));
       formData.append('id_number', details.id_number || sessionId);
-      const response = await fetch('/api/saveResume', {
+      const response = await fetch(appPath('/api/saveResume'), {
         method: 'POST',
         body: formData,
       });
@@ -569,7 +570,7 @@ export default function MakeResume() {
           fetchPersonalDetails={() => fetchWithToast('Personal Details', async () => {
             const id = details.id_number;
             console.log("Personal Info ID:", id);
-            const res = await fetch(`/api/fetchDetails?id_number=${id}`);
+            const res = await fetch(appPath(`/api/fetchDetails?id_number=${id}`));
             if (!res.ok) {
               const errorData = await res.json();
               throw new Error(`HTTP ${res.status}: ${errorData.error || 'Unknown error'}`);

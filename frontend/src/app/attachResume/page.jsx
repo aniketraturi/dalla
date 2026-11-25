@@ -1,4 +1,5 @@
 'use client';
+import { appPath } from '@/app/helper/basePath';
 import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useRouter } from 'next/navigation';
@@ -22,7 +23,7 @@ export default function UploadPage() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('/api/upload-resume', {
+      const response = await fetch(appPath('/api/upload-resume'), {
         method: 'POST',
         body: JSON.stringify({
           file: await file.arrayBuffer(),
